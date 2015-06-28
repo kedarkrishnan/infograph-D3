@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Info Graph</title>
+	<script src="./js/d3.min.js" type="text/javascript" ></script>
+	<script src="./js/infoGraph.js" type="text/javascript" ></script>
+	<style type="text/css" media="screen">
+		body{
+			margin: 40px;
+		}
+		h4{
+			padding: 0px;
+			margin: 0px;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<h4>Skills</h4>
+		<div id="skills">
+		</div>
+	</div>
+	<script>
+	skillsData =[{
+				"skill" : "Java",
+				"level"	: "6"
+			},
+			{
+				"skill" : "Spring",
+				"level"	: "5"
+			},
+			{
+				"skill" : "BIRT",
+				"level"	: "9"
+			},			
+			{
+				"skill" : "HTML5",
+				"level"	: "7"
+			},
+			{
+				"skill" : "CSS3",
+				"level"	: "5"
+			},
+			{
+				"skill" : "Javascript",
+				"level"	: "7"
+			},
+			{
+				"skill" : "Jquery",
+				"level"	: "6"
+			},			
+			{
+				"skill" : "Ember",
+				"level"	: "1"
+			},
+						{
+				"skill" : "Node Js",
+				"level"	: "1"
+			}];		
+
+
+	infoGraph.skillLevel.draw("skills",skillsData)
+	</script>
+</body>
+</html>
+
