@@ -12,14 +12,28 @@
 		h4{
 			padding: 0px;
 			margin: 0px;
+			width:200px;
+		}
+		.card{
+			display: inline-block;
+			position: relative;
+			width: 300px;
+			margin: 10px;
 		}
 	</style>
 </head>
 <body>
-	<div>
+	<h2>Infograph-D3 Sample</h2>
+	<h3>Skill level infograph.</h3>
+	<div class="card">
 		<h4>Skills</h4>
-		<div id="skills">
-		</div>
+		<span id="skills">
+		</span>
+	</div>
+	<div class="card">	
+		<h4>Skills</h4>
+		<span id="skills1">
+		</span>
 	</div>
 	<script>
 	skillsData =[{
@@ -60,7 +74,8 @@
 			}];		
 
 
-	infoGraph.skillLevel.draw("skills",skillsData)
+	infoGraph.skillLevel.draw("skills",skillsData);
+	infoGraph.skillLevel.showMax(false).bubleColor("#3F51B5").draw("skills1",skillsData)
 	</script>
 </body>
 </html>
