@@ -1,41 +1,138 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head>	
 	<meta charset="utf-8">
-	<title>Info Graph</title>
-	<script src="./js/d3.min.js" type="text/javascript" ></script>
-	<script src="./js/infoGraph.js" type="text/javascript" ></script>
-	<style type="text/css" media="screen">
-		body{
-			margin: 40px;
-		}
-		h4{
-			padding: 0px;
-			margin: 0px;
-			width:200px;
-		}
-		.card{
-			display: inline-block;
-			position: relative;
-			width: 300px;
-			margin: 10px;
-		}
-	</style>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>	
+	<link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">	
+	<link rel="stylesheet" href="./css/style.css">
+	<title>Infograph-D3</title>
 </head>
 <body>
-	<h2>Infograph-D3 Sample</h2>
-	<h3>Skill level infograph.</h3>
-	<div class="card">
-		<h4>Skills</h4>
-		<span id="skills">
-		</span>
+	<div id="wrap">	
+	<a href="https://github.com/kedarkrishnan/infograph-D3"><img class="ribbon img-responsive" src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-white@2x.png" alt="Fork me on GitHub"></a>
+	<header class="header-primary col-sm-12">	
+		<h1 class="header-title col-sm-offset-1 col-sm-10">Infograph-D3</h1>	
+	</header>	
+	<header class="header-secondary col-sm-12 hidden">
+		<h1 class="header-title col-sm-offset-1 col-sm-10">Infograph-D3</h1>	
+	</header>	
+	<section class="content col-sm-offset-1 col-sm-10">				
+		<h2 class="section-title">
+			Skill level infograph
+			<small class="section-summary">Skill level graph to show the expertise level of your skiills on your CV /profile. Created using D3 library.All you need to do is provide data in JSON format.</small>
+		</h2>
+		
+		<div class="example row">
+			<div class="col-sm-6">
+				<p class="ex-title">Default skills infograph</p>
+				<pre><code class="javascript">infoGraph.skillLevel.draw("skills",skillsData);</code></pre>
+			</div>
+			<div class="ex-graph col-sm-6 center-block" id="skills"></div>		
+		</div>
+
+		<div class="example row">			
+			<div class="col-sm-6 float-right">
+				<p class="ex-title">Set your own colours and bubble size</p>
+				<pre><code class="javascript">infoGraph.skillLevel.labelColor("#01579B")
+		    .bubleColor("#E91E63")
+		    .bubleStrokeColor("#03A9F4")
+		    .bubleRadius(8)
+		    .labelStart(100)
+		    .draw("skills",skillsData)</code></pre>			
+			</div>
+			<div class="ex-graph col-sm-6 float-left" id="skillsColor"></div>		
+		</div>
+
+		<div class="example row">
+			<div class="col-sm-6">
+				<p class="ex-title">Set your own max level for skill</p>
+				<pre><code class="javascript">infoGraph.skillLevel.maxLevel(15)
+		    .draw("skills",skillsData)</code></pre>
+			</div>			    
+		    <div class="ex-graph col-sm-6 " id="skillsMax"></div>		
+		</div>
+
+		<div class="example row">
+			<div class="col-sm-6 float-right">
+				<p class="ex-title">Don't show max level</p>
+				<pre><code class="javascript">infoGraph.skillLevel.showMax(false)
+		    .draw("skills",skillsData)</code></pre>
+			</div>
+		    <div class="ex-graph col-sm-6 float-left" id="skillsMaxOff"></div>		
+		</div>		
+		<div class="example row">
+			<div class="col-sm-6">
+				<p class="ex-title">Basic HTML Code</p>
+				<pre><code>&lt;div id="id you will provide to draw"&gt;&lt;/div&gt;</code></pre>
+			</div>
+			<div class="col-sm-6">
+					<p class="ex-title">Simple JSON data</p>
+					<pre class="json"><code>[{
+	"skill" : "Java",
+	"level"	: "6"
+},
+{
+	"skill" : "Spring",
+	"level"	: "5"
+},
+{
+	"skill" : "BIRT",
+	"level"	: "9"
+}]</code></pre>
+			</div>			
+		</div>
+	</section>	
 	</div>
-	<div class="card">	
-		<h4>Skills</h4>
-		<span id="skills1">
-		</span>
-	</div>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+	<script src="./js/d3.min.js"></script>
+	<script src="./js/infoGraph.min.js"></script>
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>		
 	<script>
+		var wrap = $(window);
+		var lastPosition = 0;
+		var shadowPosition=200;
+		var titlePosition=60;
+			
+		wrap.on("scroll",function(e){	
+			if($(window).width() < 768){
+				shadowPosition=75;
+				titlePosition = 40
+			}else{
+				shadowPosition=200;
+				titlePosition=60;
+			}	
+			var currentPosition = $(window).scrollTop();		
+			var delta = lastPosition - currentPosition;
+			lastPosition = currentPosition;			
+			console.log(currentPosition)
+			if(delta<0){
+				if (currentPosition > shadowPosition) {
+				  	$(".header-secondary").addClass("header-shadow");	
+				}else if (currentPosition > titlePosition) {
+				  	$(".header-primary .header-title").addClass("hidden");			  	
+				  	$(".header-secondary").removeClass("hidden");	
+				}
+			}else{
+				if (currentPosition < titlePosition) {
+				  	$(".header-primary .header-title").removeClass("hidden");			  	
+				  	$(".header-secondary").addClass("hidden");	
+				}else if (currentPosition < shadowPosition) {
+					$(".header-secondary").removeClass("header-shadow");	
+				}
+			}
+			  
+		});
+
+		var codes=	Array.prototype.slice.apply(document.querySelectorAll("pre code"));
+		codes.forEach(function(block){
+			hljs.highlightBlock(block);	
+		});	    
+
+		
+		
+
 	skillsData =[{
 				"skill" : "Java",
 				"level"	: "6"
@@ -75,7 +172,9 @@
 
 
 	infoGraph.skillLevel.draw("skills",skillsData);
-	infoGraph.skillLevel.showMax(false).bubleColor("#3F51B5").draw("skills1",skillsData)
+	infoGraph.skillLevel.labelColor("#01579B").bubleColor("#E91E63").bubleStrokeColor("#03A9F4").bubleRadius(8).labelStart(100).draw("skillsColor",skillsData);
+	infoGraph.skillLevel.maxLevel(15).draw("skillsMax",skillsData);
+	infoGraph.skillLevel.showMax(false).draw("skillsMaxOff",skillsData);
 	</script>
 </body>
 </html>
