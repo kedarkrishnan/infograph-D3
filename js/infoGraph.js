@@ -1,10 +1,10 @@
-!function (){
+(function (){
 	
 	var infoGraph={
 		skillLevel:{
 			options:{
 				labelColor	:"#000",
-				labelStart	:60,
+				labelStart	:80,
 				bubleColor	:"#03A9F4",
 				bubleRadius	:5,
 				bubleStrokeColor:"#03A9F4",
@@ -62,7 +62,7 @@
 	skillLevel.draw = function(id,data){
 		var options=skillLevel.options;
 		var spacer = (options.bubleRadius*2+5);
-		var skillSvg = d3.select("#"+id).selectAll("skill")
+		var skillSvg = d3.select("#"+id).append("div").selectAll("skill")
 						 .data(skillsData)
 						 .enter()
 						 .append("svg")
@@ -70,21 +70,21 @@
 						 .attr("height",spacer*1.5)
 						 .style("display","block");
 
-		var	skillName = skillSvg.append("text")		
+						skillSvg.append("text")		
 								.attr("x",options.labelStart)
 								.attr("y",spacer*1.15)	
 								.style("font-size",options.bubleRadius *0.175+"em")				
 								.attr("text-anchor","end")										
-								.text(function(d){return d.skill})
-								.attr("fill",options.labelColor)
+								.text(function(d){return d.skill;})
+								.attr("fill",options.labelColor);
 
 
-		var	skillLevelBar = skillSvg.selectAll("skilllevel")
+						 skillSvg.selectAll("skilllevel")
 								 .data(function (d){
 								 		return  d3.range(d.level);})
 								 .enter()
 								 .append("circle")
-								 .attr("cx", function(d,i){return i*spacer+options.labelStart+spacer})
+								 .attr("cx", function(d,i){return i*spacer+options.labelStart+spacer;})
 								 .attr("cy",spacer*1.5/2)
 								 .attr("r",options.bubleRadius)								 
 								 .attr("fill","#fff")
@@ -92,24 +92,35 @@
 								 .attr("fill",options.bubleColor)								 													 
 								 .duration(1000)
 								 .delay(function(d,i){
-								 	return 100*i
-								 })
+								 	return 100*i;
+								 });
 
 
 				
 		if(options.showMax){				 
-			var	totalLevel = skillSvg.selectAll("totalLevel")
+							 skillSvg.selectAll("totalLevel")
 									 .data(function (d){ return  d3.range(options.maxLevel);})
 									 .enter()
 									 .append("circle")
-									 .attr("cx", function(d,i){return i*spacer + options.labelStart+spacer})
+									 .attr("cx", function(d,i){return i*spacer + options.labelStart+spacer;})
 									 .attr("cy",spacer*1.5/2) 
 									 .attr("r",options.bubleRadius)	
 									 .attr("stroke-width",1.5)							 
 									 .attr("stroke",options.bubleStrokeColor)	
-									 .attr("fill","none")							 
+									 .attr("fill","none");							 
 		}
-	} 
+		reset();		
+	}; 
+
+	reset=function (){
+		skillLevel.options.labelColor="#000";		
+		skillLevel.options.labelStart=80;		
+		skillLevel.options.bubleColor="#03A9F4";
+		skillLevel.options.bubleRadius=5;		
+		skillLevel.options.bubleStrokeColor="#03A9F4";		
+		skillLevel.options.maxLevel=10;		
+		skillLevel.options.showMax=true;
+	};
 
 	this.infoGraph = infoGraph;
-}()
+})();
