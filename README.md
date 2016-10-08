@@ -3,6 +3,8 @@ Profile infograph using D3 js.
 ## Skill Level Graph
 ![alt text](https://github.com/kedarkrishnan/infograph-D3/blob/master/images/infograph-D3-SkillLevel.png)
 
+[Demo](http://kedarkrishnan.github.io/infograph-D3/)
+
 ## Usage
 `infoGraph.skillLevel.draw(<id>,<data>)`
 
